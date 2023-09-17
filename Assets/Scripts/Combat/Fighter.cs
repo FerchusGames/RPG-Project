@@ -9,14 +9,18 @@ namespace RPG.Combat
         [SerializeField] private float _weaponRange = 2f;
         
         private ActionScheduler _actionScheduler;
-        
+
+        private Animator _animator;
         private Transform _combatTarget;
         private Mover _mover;
+        
+        private static int AP_ATTACK_TRIGGER = Animator.StringToHash("attack");
         
         private void Awake()
         {
             _mover = GetComponent<Mover>();
             _actionScheduler = GetComponent<ActionScheduler>();
+            _animator = GetComponent<Animator>();
         }
         
         private void Update()
@@ -31,7 +35,13 @@ namespace RPG.Combat
             else
             {
                 _mover.Cancel();
+                AttackBehavior();
             }
+        }
+
+        private void AttackBehavior()
+        {
+            _animator.SetTrigger(AP_ATTACK_TRIGGER);
         }
 
         private bool IsInRange()
@@ -48,6 +58,12 @@ namespace RPG.Combat
         public void Cancel()
         {
             _combatTarget = null;
+        }
+
+        // Animation Event
+        private void Hit()
+        {
+            
         }
     }
 }

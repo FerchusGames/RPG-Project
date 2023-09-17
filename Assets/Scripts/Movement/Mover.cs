@@ -7,7 +7,7 @@ namespace RPG.Movement
 {
     public class Mover : MonoBehaviour, IAction
     {
-        public static int AP_FORWARD_SPEED = Animator.StringToHash("forwardSpeed");
+        private static int AP_FORWARD_SPEED = Animator.StringToHash("forwardSpeed");
 
         private ActionScheduler _actionScheduler;
         
