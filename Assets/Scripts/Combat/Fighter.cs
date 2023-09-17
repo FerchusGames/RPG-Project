@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using RPG.Core;
 using RPG.Movement;
@@ -27,7 +28,7 @@ namespace RPG.Combat
             _actionScheduler = GetComponent<ActionScheduler>();
             _animator = GetComponent<Animator>();
         }
-        
+
         private void Update()
         {
             _timeSinceLastAttack += Time.deltaTime;
@@ -53,9 +54,15 @@ namespace RPG.Combat
             if (_timeSinceLastAttack > _timeBetweenAttacks)
             {
                 // This will trigger the Hit() animation event.
-                _animator.SetTrigger(AP_ATTACK_TRIGGER);
+                TriggerAttack();
                 _timeSinceLastAttack = 0;
             }
+        }
+
+        private void TriggerAttack()
+        {
+            _animator.ResetTrigger(AP_STOP_ATTACK_TRIGGER);
+            _animator.SetTrigger(AP_ATTACK_TRIGGER);
         }
 
         private bool IsInRange()
@@ -71,13 +78,20 @@ namespace RPG.Combat
 
         public void Cancel()
         {
-            _animator.SetTrigger(AP_STOP_ATTACK_TRIGGER);
+            StopAttack();
             _combatTarget = null;
+        }
+
+        private void StopAttack()
+        {
+            _animator.ResetTrigger(AP_ATTACK_TRIGGER);
+            _animator.SetTrigger(AP_STOP_ATTACK_TRIGGER);
         }
 
         // Animation Event
         private void Hit()
         {
+            if (_combatTarget == null) return;
             _combatTarget.TakeDamage(_weaponDamage);
         }
 

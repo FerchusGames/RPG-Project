@@ -29,11 +29,8 @@ namespace RPG.Control
             {
                 if (hit.collider.TryGetComponent(out CombatTarget combatTarget))
                 {
-                    if (!_fighter.CanAttack(combatTarget))
-                    {
-                        continue;
-                    }
-                    
+                    if (!_fighter.CanAttack(combatTarget)) continue;
+
                     if (Input.GetMouseButtonDown(0))
                     {
                         _fighter.Attack(combatTarget);
