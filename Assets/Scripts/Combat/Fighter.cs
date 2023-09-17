@@ -1,0 +1,53 @@
+using UnityEngine;
+using RPG.Core;
+using RPG.Movement;
+
+namespace RPG.Combat
+{
+    public class Fighter : MonoBehaviour, IAction
+    {
+        [SerializeField] private float _weaponRange = 2f;
+        
+        private ActionScheduler _actionScheduler;
+        
+        private Transform _combatTarget;
+        private Mover _mover;
+        
+        private void Awake()
+        {
+            _mover = GetComponent<Mover>();
+            _actionScheduler = GetComponent<ActionScheduler>();
+        }
+        
+        private void Update()
+        {
+            if (_combatTarget == null) return;
+            
+            if (!IsInRange())
+            {
+                _mover.MoveTo(_combatTarget.position);
+            }
+            
+            else
+            {
+                _mover.Cancel();
+            }
+        }
+
+        private bool IsInRange()
+        {
+            return Vector3.Distance(transform.position, _combatTarget.position) < _weaponRange;
+        }
+
+        public void Attack(CombatTarget combatTarget)
+        {
+            _actionScheduler.StartAction(this);
+            _combatTarget = combatTarget.transform;
+        }
+
+        public void Cancel()
+        {
+            _combatTarget = null;
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "name": "Control",
+    "rootNamespace": "RPG.Control",
+    "references": [
+        "GUID:a961b0b9527ac28449b5ba3a4ef62779",
+        "GUID:b8a962f3114be42439b81f50bc5fdca4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
