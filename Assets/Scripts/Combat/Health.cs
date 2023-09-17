@@ -11,8 +11,8 @@ namespace RPG.Combat
         private Animator _animator;
         
         private static int AP_DEATH_TRIGGER = Animator.StringToHash("die");
-        private bool _isDead = false;
-
+        public bool IsDead { get; private set; }
+        
         private void Awake()
         {
             _animator = GetComponent<Animator>();
@@ -22,7 +22,7 @@ namespace RPG.Combat
         {
             _healthPoints = Mathf.Max(_healthPoints - damage, 0);
             Debug.Log(_healthPoints);
-            if (_healthPoints == 0 && !_isDead)
+            if (_healthPoints == 0 && !IsDead)
             {
                 Die();
             }
@@ -30,7 +30,7 @@ namespace RPG.Combat
 
         private void Die()
         {
-            _isDead = true;
+            IsDead = true;
             _animator.SetTrigger(AP_DEATH_TRIGGER);
         }
     }
