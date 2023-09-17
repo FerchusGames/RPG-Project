@@ -27,7 +27,7 @@ namespace RPG.Control
 
             foreach (var hit in hits)
             {
-                if (hit.collider.TryGetComponent<CombatTarget>(out CombatTarget combatTarget))
+                if (hit.collider.TryGetComponent(out CombatTarget combatTarget))
                 {
                     if (Input.GetMouseButtonDown(0))
                     {
