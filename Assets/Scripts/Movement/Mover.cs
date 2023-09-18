@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
 
-
 namespace RPG.Movement
 {
     public class Mover : MonoBehaviour, IAction
@@ -10,10 +9,11 @@ namespace RPG.Movement
         private static int AP_FORWARD_SPEED = Animator.StringToHash("forwardSpeed");
 
         private ActionScheduler _actionScheduler;
+        private Health _health;
         
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
-    
+
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -23,6 +23,8 @@ namespace RPG.Movement
 
         private void Update()
         {
+            _navMeshAgent.enabled = !_health.IsDead;
+            
             UpdateAnimator();
         }
 

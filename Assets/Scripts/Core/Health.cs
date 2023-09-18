@@ -1,27 +1,29 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.Core
 {
     public class Health : MonoBehaviour
     {
+        public bool IsDead { get; private set; }
+        
         [SerializeField] private float _healthPoints = 100f;
         
-        private Animator _animator;
+        private ActionScheduler _actionScheduler;
         
+        private Animator _animator;
+
         private static int AP_DEATH_TRIGGER = Animator.StringToHash("die");
-        public bool IsDead { get; private set; }
         
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         public void TakeDamage(float damage)
         {
             _healthPoints = Mathf.Max(_healthPoints - damage, 0);
-            Debug.Log(_healthPoints);
+            Debug.Log(name + " | Health Points: " + _healthPoints);
             if (_healthPoints == 0 && !IsDead)
             {
                 Die();
@@ -32,6 +34,7 @@ namespace RPG.Combat
         {
             IsDead = true;
             _animator.SetTrigger(AP_DEATH_TRIGGER);
+            _actionScheduler.CancelCurrentAction();
         }
     }
 }

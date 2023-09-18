@@ -3,7 +3,8 @@
     "rootNamespace": "RPG.Control",
     "references": [
         "GUID:a961b0b9527ac28449b5ba3a4ef62779",
-        "GUID:b8a962f3114be42439b81f50bc5fdca4"
+        "GUID:b8a962f3114be42439b81f50bc5fdca4",
+        "GUID:a7deefe699c73c347b93e1ab5e9864da"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

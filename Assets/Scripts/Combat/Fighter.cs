@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using RPG.Core;
 using RPG.Movement;
@@ -19,8 +18,8 @@ namespace RPG.Combat
         
         private static int AP_ATTACK_TRIGGER = Animator.StringToHash("attack");
         private static int AP_STOP_ATTACK_TRIGGER = Animator.StringToHash("stopAttack");
-        
-        private float _timeSinceLastAttack = 0;
+
+        private float _timeSinceLastAttack = Mathf.Infinity;
         
         private void Awake()
         {
@@ -70,10 +69,15 @@ namespace RPG.Combat
             return Vector3.Distance(transform.position, _combatTarget.transform.position) < _weaponRange;
         }
 
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             _actionScheduler.StartAction(this);
             _combatTarget = combatTarget.GetComponent<Health>();
+        }
+
+        public bool CanAttack(GameObject combatTarget)
+        {
+            return !combatTarget.GetComponent<Health>().IsDead;
         }
 
         public void Cancel()
@@ -93,11 +97,6 @@ namespace RPG.Combat
         {
             if (_combatTarget == null) return;
             _combatTarget.TakeDamage(_weaponDamage);
-        }
-
-        public bool CanAttack(CombatTarget combatTarget)
-        {
-            return combatTarget.GetComponent<Health>().IsDead;
         }
     }
 }
