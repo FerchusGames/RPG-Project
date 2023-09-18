@@ -10,20 +10,25 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] private float _chaseDistance = 5f;
-
+        [SerializeField] private float _suspicionTime = 5f;
+        
         private Fighter _fighter;
         private Health _health;
         private Mover _mover;
+        private ActionScheduler _actionScheduler;
         
         private GameObject _player;
         private Vector3 _guardPosition;
         
+        private float _timeSinceLastSawPlayer = Mathf.Infinity;
+
         private void Awake()
         {
             _player = GameObject.FindWithTag("Player");
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
             _mover = GetComponent<Mover>();
+            _actionScheduler = GetComponent<ActionScheduler>();
             _guardPosition = transform.position;
         }
 
@@ -33,12 +38,34 @@ namespace RPG.Control
 
             if (ShouldChasePlayer() && _fighter.CanAttack(_player))
             {
-                _fighter.Attack(_player);
+                _timeSinceLastSawPlayer = 0;
+                AttackBehavior();
+            }
+            else if (_timeSinceLastSawPlayer < _suspicionTime)
+            {
+                SuspicionBehavior();
             }
             else
             {
-                _mover.StartMoveAction(_guardPosition);
+                GuardBehavior();
             }
+            
+            _timeSinceLastSawPlayer += Time.deltaTime;
+        }
+
+        private void GuardBehavior()
+        {
+            _mover.StartMoveAction(_guardPosition);
+        }
+
+        private void SuspicionBehavior()
+        {
+            _actionScheduler.CancelCurrentAction();
+        }
+
+        private void AttackBehavior()
+        {
+            _fighter.Attack(_player);
         }
 
         private bool ShouldChasePlayer()
