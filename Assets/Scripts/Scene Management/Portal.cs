@@ -3,10 +3,19 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-namespace RPG
+namespace RPG.SceneManagement
 {
     public class Portal : MonoBehaviour
     {
+        [SerializeField] private float _fadeDuration = 1f;
+        
+        private Fader _fader;
+
+        private void Awake()
+        {
+            _fader = FindObjectOfType<Fader>();
+        }
+
         enum DestinationIdentifier
         {
             A, B, C, D, E
@@ -34,11 +43,15 @@ namespace RPG
             }
             
             DontDestroyOnLoad(gameObject);
+            
+            yield return StartCoroutine(_fader.FadeOut(_fadeDuration));
             yield return SceneManager.LoadSceneAsync(_sceneToLoad);
             
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
             
+            yield return StartCoroutine(_fader.FadeIn(_fadeDuration));
+
             Destroy(gameObject);
         }
 
