@@ -2,7 +2,8 @@
     "name": "Movement",
     "rootNamespace": "RPG.Movement",
     "references": [
-        "Core"
+        "Core",
+        "Saving"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
