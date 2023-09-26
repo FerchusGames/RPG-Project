@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using RPG.Saving;
+using UnityEngine;
 
 namespace RPG.Core
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, ISaveable
     {
         public bool IsDead { get; private set; }
         
@@ -35,6 +36,20 @@ namespace RPG.Core
             IsDead = true;
             _animator.SetTrigger(AP_DEATH_TRIGGER);
             _actionScheduler.CancelCurrentAction();
+        }
+
+        public object CaptureState()
+        {
+            return _healthPoints;
+        }
+
+        public void RestoreState(object state)
+        {
+            _healthPoints = (float) state;
+            if (_healthPoints == 0 && !IsDead)
+            {
+                Die();
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 {
     "name": "Core",
     "rootNamespace": "RPG.Core",
-    "references": [],
+    "references": [
+        "GUID:aee9297f2a1e5f941b7134944539c1bd"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
