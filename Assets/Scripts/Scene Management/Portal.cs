@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RPG.SceneManagement
 {
@@ -10,15 +10,17 @@ namespace RPG.SceneManagement
         [SerializeField] private float _fadeDuration = 1f;
         
         private Fader _fader;
-
-        private void Awake()
-        {
-            _fader = FindObjectOfType<Fader>();
-        }
+        private SavingWrapper _savingWrapper;
 
         enum DestinationIdentifier
         {
             A, B, C, D, E
+        }
+        
+        private void Start()
+        {
+            _fader = FindObjectOfType<Fader>();
+            _savingWrapper = FindObjectOfType<SavingWrapper>();
         }
         
         [SerializeField] private Transform _spawnPoint;
@@ -45,7 +47,12 @@ namespace RPG.SceneManagement
             DontDestroyOnLoad(gameObject);
             
             yield return StartCoroutine(_fader.FadeOut(_fadeDuration));
+
+            _savingWrapper.Save();
+            
             yield return SceneManager.LoadSceneAsync(_sceneToLoad);
+            
+            _savingWrapper.Load();
             
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
@@ -58,8 +65,14 @@ namespace RPG.SceneManagement
         private void UpdatePlayer(Portal otherPortal)
         {
             GameObject player = GameObject.FindWithTag("Player");
+            NavMeshAgent navMeshAgent = player.GetComponent<NavMeshAgent>();
+            
+            navMeshAgent.enabled = false;
+            
             player.transform.position = otherPortal._spawnPoint.position;
             player.transform.rotation = otherPortal._spawnPoint.rotation;
+            
+            navMeshAgent.enabled = true;
         }
 
         private Portal GetOtherPortal()
