@@ -14,12 +14,13 @@ namespace RPG.Combat
         private Transform _handTransform = null;
 
         [SerializeField]
-        private Weapon _weapon = null;
+        private Weapon _defaultWeapon = null;
 
         private ActionScheduler _actionScheduler;
         private Animator _animator;
         private Health _combatTarget;
         private Mover _mover;
+        private Weapon _currentWeapon = null;
 
         private static int AP_ATTACK_TRIGGER = Animator.StringToHash("attack");
         private static int AP_STOP_ATTACK_TRIGGER = Animator.StringToHash("stopAttack");
@@ -35,7 +36,7 @@ namespace RPG.Combat
 
         private void Start()
         {
-            _weapon.Spawn(_handTransform, _animator);
+            EquipWeapon(_defaultWeapon);
         }
 
         private void Update()
@@ -78,7 +79,7 @@ namespace RPG.Combat
         private bool IsInRange()
         {
             return Vector3.Distance(transform.position, _combatTarget.transform.position)
-                < _weapon.Range;
+                < _currentWeapon.Range;
         }
 
         public void Attack(GameObject combatTarget)
@@ -110,7 +111,13 @@ namespace RPG.Combat
         {
             if (_combatTarget == null)
                 return;
-            _combatTarget.TakeDamage(_weapon.Damage);
+            _combatTarget.TakeDamage(_currentWeapon.Damage);
+        }
+
+        public void EquipWeapon(Weapon weapon)
+        {
+            _currentWeapon = weapon;
+            _currentWeapon.Spawn(_handTransform, _animator);
         }
     }
 }
