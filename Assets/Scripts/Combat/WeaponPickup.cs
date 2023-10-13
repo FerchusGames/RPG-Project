@@ -9,7 +9,7 @@ namespace RPG.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Player")
+            if (other.CompareTag("Player"))
             {
                 other.GetComponent<Fighter>().EquipWeapon(_weapon);
                 Destroy(gameObject);
