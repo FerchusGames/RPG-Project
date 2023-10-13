@@ -6,15 +6,28 @@ namespace RPG.Combat
     public class Weapon : ScriptableObject
     {
         [SerializeField]
-        private GameObject _weaponPrefab = null;
+        private GameObject _equippedPrefab = null;
 
         [SerializeField]
         private AnimatorOverrideController _animatorOverrideController = null;
 
+        [field: SerializeField]
+        public float Range { get; private set; } = 2f;
+
+        [field: SerializeField]
+        public float Damage { get; private set; } = 5f;
+
         public void Spawn(Transform handTransform, Animator animator)
         {
-            Instantiate(_weaponPrefab, handTransform);
-            animator.runtimeAnimatorController = _animatorOverrideController;
+            if (_equippedPrefab != null)
+            {
+                Instantiate(_equippedPrefab, handTransform);
+            }
+
+            if (_animatorOverrideController != null)
+            {
+                animator.runtimeAnimatorController = _animatorOverrideController;
+            }
         }
     }
 }
