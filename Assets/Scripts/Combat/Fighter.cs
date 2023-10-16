@@ -11,7 +11,10 @@ namespace RPG.Combat
         private float _timeBetweenAttacks = 1f;
 
         [SerializeField]
-        private Transform _handTransform = null;
+        private Transform _rightHandTransform = null;
+
+        [SerializeField]
+        private Transform _leftHandTransform = null;
 
         [SerializeField]
         private Weapon _defaultWeapon = null;
@@ -117,7 +120,7 @@ namespace RPG.Combat
         public void EquipWeapon(Weapon weapon)
         {
             _currentWeapon = weapon;
-            _currentWeapon.Spawn(_handTransform, _animator);
+            _currentWeapon.Spawn(_rightHandTransform, _leftHandTransform, _animator);
         }
     }
 }

@@ -92,13 +92,17 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 4086108721744829487, guid: 202238c25d4f6c04991dd009a910e1e6,
         type: 3}
-      propertyPath: _defaultWeapon
+      propertyPath: _handTransform
       value: 
-      objectReference: {fileID: 11400000, guid: e809573435350d646a920ea91cc594de,
-        type: 2}
+      objectReference: {fileID: 2854145934255240229}
     - target: {fileID: 4086108721744829487, guid: 202238c25d4f6c04991dd009a910e1e6,
         type: 3}
-      propertyPath: _handTransform
+      propertyPath: _leftHandTransform
+      value: 
+      objectReference: {fileID: 2854145934255297613}
+    - target: {fileID: 4086108721744829487, guid: 202238c25d4f6c04991dd009a910e1e6,
+        type: 3}
+      propertyPath: _rightHandTransform
       value: 
       objectReference: {fileID: 2854145934255240229}
     - target: {fileID: 4086108721744829487, guid: 202238c25d4f6c04991dd009a910e1e6,
@@ -261,6 +265,12 @@ Transform:
 --- !u!4 &2854145934255265979 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 435482, guid: 679ff741e12a7e740819ede24a7000b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2854145934255701409}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2854145934255297613 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 403948, guid: 679ff741e12a7e740819ede24a7000b7,
     type: 3}
   m_PrefabInstance: {fileID: 2854145934255701409}
   m_PrefabAsset: {fileID: 0}
