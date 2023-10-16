@@ -17,5 +17,7 @@ MonoBehaviour:
   _animatorOverrideController: {fileID: 22100000, guid: eb92f2ad579f5d14d8dce38fe843d564,
     type: 2}
   _isRightHanded: 0
+  _projectile: {fileID: 4467100886566080282, guid: 70b1525983085ba45a3abead35392da3,
+    type: 3}
   <Range>k__BackingField: 10
   <Damage>k__BackingField: 10

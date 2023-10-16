@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using RPG.Core;
 
 namespace RPG.Combat
 {
@@ -8,8 +9,7 @@ namespace RPG.Combat
         [SerializeField]
         private float _speed = 1f;
 
-        [SerializeField]
-        private Transform _target;
+        private Health _target;
 
         private void Update()
         {
@@ -20,14 +20,19 @@ namespace RPG.Combat
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
         }
 
+        public void SetTarget(Health target)
+        {
+            _target = target;
+        }
+
         private Vector3 GetAimLocation()
         {
             CapsuleCollider capsuleCollider = _target.GetComponent<CapsuleCollider>();
             if (capsuleCollider == null)
             {
-                return _target.position;
+                return _target.transform.position;
             }
-            return _target.position + Vector3.up * capsuleCollider.height / 2;
+            return _target.transform.position + Vector3.up * capsuleCollider.height / 2;
         }
     }
 }
